@@ -1,0 +1,18 @@
+ddns-update-style none;
+
+option domain-name "thezengarden.net";
+option domain-name-servers 10.1.1.210;
+
+default-lease-time 86400;
+max-lease-time 604800;
+
+authoritative;
+
+subnet 10.10.10.128 netmask 255.255.255.224
+{
+  option routers 10.10.10.158;
+  option broadcast-address 10.10.10.159;
+  next-server 10.10.10.129;
+  filename "pxelinux.0";
+
+

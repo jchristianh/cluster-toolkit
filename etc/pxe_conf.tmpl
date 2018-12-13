@@ -1,0 +1,7 @@
+DEFAULT linux
+PROMPT 1
+TIMEOUT BOOT_WAIT
+
+label linux
+  kernel vmlinuz
+  append initrd=initrd.img root=nfs:BOOT_NODE:/tftpboot/clients/CLIENT_NODE:rw net-dev=eth0 nompath nodmraid net.ifnames=0 biosdevname=0 console=tty0 console=ttyS1,115200 selinux=0 pci=nommconf
