@@ -1,2 +1,2 @@
-10.10.10.129:/opt/cluster/ext    /ext   nfs nfsvers=3,rw,soft,intr,rsize=32768,wsize=32768,noatime,proto=udp 0 0
-zg-vdm01.thezengarden.net:/vdm/1 /vdm/1 nfs nfsvers=3,rw,soft,intr,rsize=32768,wsize=32768,noatime,proto=udp 0 0
+10.10.10.129:/opt/cluster/ext         /ext     nfs nfsvers=3,rw,soft,intr,rsize=32768,wsize=32768,noatime,proto=udp 0 0
+tokyo.thezengarden.net:/ds1/ext/vdm/1 /vdm/1   nfs nfsvers=3,rw,soft,intr,rsize=32768,wsize=32768,noatime,proto=udp 0 0
