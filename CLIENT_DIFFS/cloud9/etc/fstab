@@ -1,0 +1,1 @@
+10.10.10.129:/u/cloud9         /u/cloud9     nfs nfsvers=3,rw,soft,intr,rsize=32768,wsize=32768,noatime,proto=udp 0 0
