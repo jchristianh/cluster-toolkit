@@ -6,6 +6,8 @@ my $nconf  = $ARGV[0];
 my $action = $ARGV[1];
 my $node   = $ARGV[2];
 
+my $vmhost = 'zg-vm1.thezengarden.net';
+
 my %clrs = (
   'red'    => "\033[1;31m",
   'yellow' => "\033[1;33m",
@@ -27,6 +29,8 @@ if ($action ne 'status')
   print "usage: ./cpower.pl <node config file> <poweron|poweroff|reset|status> <node|all>\n" and exit if $action eq '' or $node eq '';
 }
 
+my $maxchars = 10;
+
 open (NODES, "< $nconf") or die "cannot open $nconf for read: #!\n";
 
 while (my $line = <NODES>)
@@ -34,22 +38,30 @@ while (my $line = <NODES>)
   chomp $line;
   my @n = split (/::/, $line);
 
-  # 122::cnode1::10.10.10.130::7E:E5:3D:C4:20:62
+  next if $n[0] =~ /^#/;
+
+  # 122::cnode1::10.10.10.130::7E:E5:3D:C4:20:62::zg-vm1
   my $vid   = $n[0];
   my $vnode = $n[1];
 
+  $vmhost = $n[4];
+
   if ($action eq 'status')
   {
-    $vmcmd = `ssh kaiju qm status $vid`;
+    $vmcmd = `ssh $vmhost qm status $vid`;
     chomp $vmcmd;
     $vmcmd =~ s/status: //;
+
+    my $cpad = ($maxchars - length $vnode);
+    my $pad  = " " x $cpad;
+
     if ($vmcmd =~ /stop/)
     {
-      print "${BOLD}$vnode:${RESET} ${YELLOW}$vmcmd${RESET}\n";
+      print "${BOLD}$vnode$pad:${RESET} ${YELLOW}$vmcmd${RESET}\n";
     }
     else
     {
-      print "${BOLD}$vnode:${RESET} ${GREEN}$vmcmd${RESET}\n";
+      print "${BOLD}$vnode$pad:${RESET} ${GREEN}$vmcmd${RESET}\n";
     }
     next;
   }
@@ -59,21 +71,21 @@ while (my $line = <NODES>)
     if ($action eq 'poweron')
     {
       print "${BOLD}$vnode poweron${RESET} ...";
-      $vmcmd = `ssh kaiju qm start $vid`;
+      $vmcmd = `ssh $vmhost qm start $vid`;
       print "${GREEN}OK!${RESET}\n";
     }
     elsif ($action eq 'poweroff')
     {
       print "${BOLD}$vnode poweroff${RESET} ...";
-      $vmcmd = `ssh kaiju qm stop $vid`;
+      $vmcmd = `ssh $vmhost qm stop $vid`;
       print "${GREEN}OK!${RESET}\n";
     }
     elsif ($action eq 'reset')
     {
       print "${BOLD}$vnode reset${RESET} ...";
-      $vmcmd = `ssh kaiju qm stop $vid`;
+      $vmcmd = `ssh $vmhost qm stop $vid`;
       sleep 2;
-      $vmcmd = `ssh kaiju qm start $vid`;
+      $vmcmd = `ssh $vmhost qm start $vid`;
       print "${GREEN}OK!${RESET}\n";
     }
     else
@@ -88,21 +100,21 @@ while (my $line = <NODES>)
     if ($action eq 'poweron')
     {
       print "${BOLD}$vnode poweron${RESET} ...";
-      $vmcmd = `ssh kaiju qm start $vid`;
+      $vmcmd = `ssh $vmhost qm start $vid`;
       print "${GREEN}OK!${RESET}\n";
     }
     elsif ($action eq 'poweroff')
     {
       print "${BOLD}$vnode poweroff${RESET} ...";
-      $vmcmd = `ssh kaiju qm stop $vid`;
+      $vmcmd = `ssh $vmhost qm stop $vid`;
       print "${GREEN}OK!${RESET}\n";
     }
     elsif ($action eq 'reset')
     {
       print "${BOLD}$vnode reset${RESET} ...";
-      $vmcmd = `ssh kaiju qm stop $vid`;
+      $vmcmd = `ssh $vmhost qm stop $vid`;
       sleep 2;
-      $vmcmd = `ssh kaiju qm start $vid`;
+      $vmcmd = `ssh $vmhost qm start $vid`;
       print "${GREEN}OK!${RESET}\n";
     }
     else

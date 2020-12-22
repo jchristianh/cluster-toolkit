@@ -15,6 +15,9 @@ my $DHCPD_CONF    = '/etc/dhcp/dhcpd.conf';
 my $DHCPD_HDR     = '../etc/dhcpd_hdr.tmpl';
 my $DHCPD_FTR     = '../etc/dhcpd_ftr.tmpl';
 
+my $BOOT_REL      = `uname -r`;
+chomp $BOOT_REL;
+
 my %clrs = (
   'red'    => "\033[1;31m",
   'yellow' => "\033[1;33m",
@@ -58,8 +61,8 @@ PROMPT 1
 TIMEOUT $BOOT_WAIT
 
 label linux
-  kernel vmlinuz
-  append initrd=initrd.img root=nfs:$BOOT_NODE:/tftpboot/clients/$n[2]:rw net-dev=eth0 nompath nodmraid net.ifnames=0 biosdevname=0 console=tty0 console=ttyS1,115200 selinux=0 pci=nommconf
+  kernel vmlinuz-$BOOT_REL
+  append initrd=initrd-$BOOT_REL-netboot.img root=nfs:$BOOT_NODE:/tftpboot/clients/$n[2]:rw net-dev=eth0 nompath nodmraid net.ifnames=0 biosdevname=0 console=tty0 console=ttyS1,115200 selinux=0 pci=nommconf
 EOM
 
   close (PXECFG);

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NODE_IP=$1
-STATIC_IMG="/opt/cluster/STATIC_IMAGE/CENTOS7_64/*"
+STATIC_IMG="/opt/cluster/STATIC_IMAGE/CENTOS7/*"
 ROOT_PATH="/tftpboot/clients"
 
 

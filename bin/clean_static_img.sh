@@ -1,6 +1,6 @@
 #!/bin/bash
 
-STATIC_IMG="/opt/cluster/STATIC_IMAGE/CENTOS7_64"
+STATIC_IMG="/opt/cluster/STATIC_IMAGE/CENTOS7"
 
 rm -rfv ${STATIC_IMG}/var/cache/yum/*
 rm -fv ${STATIC_IMG}/etc/sysconfig/selinux

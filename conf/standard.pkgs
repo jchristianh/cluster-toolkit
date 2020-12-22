@@ -1,1 +1,1 @@
-vim-enhanced git epel-release ntp nfs-utils net-tools file bind-utils traceroute
+vim-enhanced git epel-release ntp nfs-utils net-tools file bind-utils traceroute yum-utils
